@@ -9,11 +9,12 @@ const UsersList = () => {
         const fetchUsers = async () => {
             try {
                 const response = await axios.get('http://localhost:5002/api/users', {
-                    headers: { 'x-auth-token': localStorage.getItem('token') }
+                    headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }, // Ensure token is correct if needed
                 });
                 setUsers(response.data);
             } catch (error) {
                 console.error('Error fetching users:', error);
+                alert('Failed to load users. Please check the backend.');
             }
         };
 
@@ -24,7 +25,7 @@ const UsersList = () => {
         <div>
             <h2>Users List</h2>
             <ul>
-                {users.map(user => (
+                {users.map((user) => (
                     <li key={user._id}>{user.name} - {user.email}</li>
                 ))}
             </ul>

@@ -29,9 +29,10 @@ router.post('/create', async (req, res) => {
 router.get('/', authMiddleware, async (req, res) => {
     try {
         const users = await User.find();
-        res.json(users);
+        res.status(200).json(users);
     } catch (error) {
-        res.status(500).json({ error: 'Error fetching users' });
+        console.error('Error fetching users:', error);
+        res.status(500).json({ message: 'Failed to fetch users' });
     }
 });
 
